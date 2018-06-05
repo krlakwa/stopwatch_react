@@ -12,29 +12,25 @@ class Stopwatch extends React.Component {
       },
       resultsTable: []
     };
-    this.miliseconds = this.state.time.miliseconds;
-    this.seconds = this.state.time.seconds;
-    this.minutes = this.state.time.minutes;
-    this.resultsTable = this.state.resultsTable;
   }
 
   step() {
     this.setState(prevState => ({
       handler: prevState + 1,
       time: {
-        miliseconds: this.miliseconds,
-        seconds: this.seconds,
-        minutes: this.minutes
+        miliseconds: this.state.time.miliseconds,
+        seconds: this.state.time.seconds,
+        minutes: this.state.time.minutes
       }
     }));
-    this.miliseconds += 1;
-    if (this.miliseconds >= 100) {
-      this.seconds += 1;
-      this.miliseconds = 0;
+    this.state.time.miliseconds += 1;
+    if (this.state.time.miliseconds >= 100) {
+      this.state.time.seconds += 1;
+      this.state.time.miliseconds = 0;
     }
-    if (this.seconds >= 60) {
-      this.minutes += 1;
-      this.seconds = 0;
+    if (this.state.time.seconds >= 60) {
+      this.state.time.minutes += 1;
+      this.state.time.seconds = 0;
     }
   }
 
@@ -60,34 +56,38 @@ class Stopwatch extends React.Component {
         this.state.time.seconds
       )}:${pad0(this.state.time.miliseconds)}`;
       let result = savedTime.toString();
-      this.resultsTable = [...this.resultsTable, result];
+      this.state.resultsTable = [...this.state.resultsTable, result];
       this.setState(prevState => ({
         results: prevState.results + 1
       }));
 
       this.setState({
-        handler: 0
+        handler: 0,
+        time: {
+          miliseconds: 0,
+          seconds: 0,
+          minutes: 0
+        }
       });
-      this.miliseconds = this.state.time.miliseconds;
-      this.seconds = this.state.time.seconds;
-      this.minutes = this.state.time.minutes;
     }
   }
 
   clearResults() {
-    this.setState({
-      results: 0,
-      time: {
-        miliseconds: this.state.time.miliseconds,
-        seconds: this.state.time.seconds,
-        minutes: this.state.time.minutes
-      }
-    });
-    this.state.resultsTable = [];
+    if (!this.state.running) {
+      this.setState({
+        results: 0,
+        time: {
+          miliseconds: this.state.time.miliseconds,
+          seconds: this.state.time.seconds,
+          minutes: this.state.time.minutes
+        }
+      });
+      this.state.resultsTable = [];
+    }
   }
 
   render() {
-    const resultItem = this.resultsTable.map((time, index) => (
+    const resultItem = this.state.resultsTable.map((time, index) => (
       <li key={index + 1}> {time} </li>
     ));
 
