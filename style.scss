@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400&subset=latin-ext");
+//============Variables=============
+$dark-gray: #161616;
+$light-gray: #464646;
+$green-start: #203825;
+$red-stop: #3f1c1b;
+$white: #fff;
+@mixin main-font {
+  font-family: "Roboto", sans-serif;
+}
+
+@mixin header {
+  width: 85%;
+  background-color: #1e1e1e;
+  padding: 10px 0;
+  color: $white;
+  font-weight: 300;
+  letter-spacing: 2px;
+  @include main-font;
+}
+
+@mixin button-reset {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  color: $white;
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  border: 1px solid $dark-gray;
+  transition: 0.2s ease-in-out;
+  @include main-font;
+  background-color: #3f3f3f;
+  font-size: 12px;
+  box-shadow: 0 0 0 3px #3f3f3f;
+}
+
+body {
+  position: relative;
+  width: calc(100vw - 15px);
+  height: calc(100vh - 22px);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: $dark-gray;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 450px;
+  background-color: #151515;
+  text-align: center;
+  border-left: 1px solid $light-gray;
+  border-right: 1px solid $light-gray;
+  transform: translate(-50%, -50%);
+  h1 {
+    @include header;
+    margin: 10px auto;
+    font-size: 18px;
+  }
+  .controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    .button {
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      border-radius: 50%;
+      color: $white;
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      border: 1px solid $dark-gray;
+      transition: 0.2s ease-in-out;
+      @include main-font;
+      &:first-child {
+        background-color: $green-start;
+        box-shadow: 0 0 0 3px $green-start;
+      }
+      &:nth-child(2) {
+        @include button-reset;
+      }
+      &:last-child {
+        background-color: $red-stop;
+        box-shadow: 0 0 0 3px $red-stop;
+      }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .stopwatch {
+    @include main-font;
+    font-size: 80px;
+    font-weight: 300;
+    color: $white;
+  }
+  h2 {
+    position: relative;
+    @include header;
+    margin: 3px auto;
+    font-size: 16px;
+    a {
+      @include button-reset;
+      position: absolute;
+      right: 10px;
+      top: -5px;
+      transition: 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .results {
+    list-style: none;
+    padding: 0;
+    max-height: 130px;
+    overflow-y: auto;
+    li {
+      @include main-font;
+      display: inline-block;
+      width: 80%;
+      padding: 3px 0;
+      border-bottom: 1px solid $light-gray;
+      font-size: 14px;
+      color: $white;
+      letter-spacing: 2px;
+    }
+    &::-webkit-scrollbar {
+      width: 0.5em;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+      border-radius: 5px;
+      outline: 1px solid slategrey;
+    }
+  }
+}
